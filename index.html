@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="top">
+				<div class="data-bottom fl">
+					<p class="close">
+						<span class="name"></span>
+						<span class="now">15.43</span>
+					</p >
+				</div>
+				<div class="data-top fl">
+
+					<dl class="fluctuation fl">
+						<dt class="fl">哈哈</dt>
+						<dd class="fl"></dd>
+					</dl>
+					<dl class="chg fl">
+						<dt class="fl">哈哈</dt>
+						<dd class="fl"></dd><span class="percent">%</span>
+					</dl>
+					<dl class="high fl">
+						<dt class="fl">哈哈</dt>
+						<dd class="fl"></dd>
+					</dl>
+					<dl class="low fl">
+						<dt class="fl">哈哈</dt>
+						<dd class="fl"></dd>
+					</dl>
+					<dl class="opens fl">
+						<dt class="fl">哈哈</dt>
+						<dd class="fl"></dd>
+					</dl>
+					<dl class="closes fl">
+						<dt class="fl">哈哈</dt>
+						<dd class="fl"></dd>
+					</dl>
+					<dl class="sum fl">
+						<dt class="fl">哈哈</dt>
+						<dd class="fl"></dd>
+					</dl>
+					<dl class="time fl">
+						<dt class="fl">哈哈</dt>
+						<dd class="fl"></dd>
+					</dl>
+				</div>
+
+
+			</div>
+			<script type="text/javascript">
+				//期货详情 请求数据
+                $.ajax({
+                	type:"post",
+                	url: 'http://pay.hzsc188.com/futures-xs/' + "stock/getStockTable",
+                	dataType: 'json',
+                	async: true,
+                //	cache: false,
+                	contentType: "application/json;charset=utf-8",
+                	data: JSON.stringify({
+                		"pageSize": 100000000,
+                		"currentPage": 1,
+                		"stockId": 600280
+                	}),
+					crossDomain: true == !(document.all),
+                	success: function(data){
+                		console.log(data);
+                		var res = data.resultList[0];
+                		$('.name').text(res.name);
+                		$('.now').html(res.now);
+                		//红涨绿跌
+                		(res.riseRange>=0)?$('.chg dd,.percent,.fluctuation dd,.now').css('color','#e30000'):$('.chg dd,.percent,.fluctuation dd,.now').css('color','#007130');
+                		$('.fluctuation dd').html(res.rise);
+                		$('.chg dd').html(res.riseRange);
+                		$('.high dd').html(res.height);
+                		$('.low dd').html(res.low);
+                		$('.sum dd').html(res.volume);
+                		$('.opens dd').html(res.opens);
+                		$('.closes dd').html(res.closes)
+                	}
+
+                });
+			</script>
+	</body>
+</html>
