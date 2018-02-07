@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <div>
+        </div>
+
+        <script>
+        /* 两个数组 arr1 和 arr2 求他们中 id 相同的项 */
+        var arr1 = [
+            {id: 1, name: 'a'},
+            {id: 2, name: 'b'},
+            {id: 3,name: 'c'},
+            {id: 4,name: 'd'},
+            {id: 5,name: 'e'},
+            {id: 6,name: 'f'}
+        ];
+        var arr2 = [
+            {id: 1,name: 'a'},
+            {id: 4,name: 'd'},
+            {id: 7,name: 'g'}
+        ];
+
+        // 方法一 （复杂度：6*3 ）
+        var newArr1 = [];
+        for(var i=0; i< arr1.length; i++) {
+            for(var j=0; j<arr2.length; j++) {
+                if (arr1[i].id == arr2[j].id) {
+                    newArr1.push(arr1[i])
+                }
+            }
+        }
+        console.log(newArr1)
+
+
+        // 方法二 （复杂度：3 ）
+        // O = arr1.length + arr2.length + min(arr.length, arr2.length);
+        const [minArr, maxArr] = arr1.length > arr2.length ? [arr2, arr1] : [arr1, arr2];
+        const tempMaxArrObj = {};
+        maxArr.map(item => tempMaxArrObj[item.id] = item);  // m 的复杂度
+        minArrIdArr = minArr.map(item => item.id);    // n 的复杂度
+        const result = [];
+        minArrIdArr.map((id) => tempMaxArrObj[id] && result.push(tempMaxArrObj[id])); // min(m, n) 的复杂度。
+
+        console.log(result)
+
+
+        arr1 = new Set(arr1.map(i => i.id));
+        arr2 = new Set(arr2.map(i => i.id));
+        let intersectionSet = new Set([...arr1].filter(x => arr2.has(x)));
+        console.log(intersectionSet);
+
+        </script>
+    </body>
+</html>
